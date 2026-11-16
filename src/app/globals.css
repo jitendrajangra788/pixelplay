@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-display: var(--font-outfit);
+  --color-navy-950: #070b14;
+  --color-navy-900: #0c1222;
+  --color-navy-800: #141c31;
+  --color-navy-700: #1d2844;
+  --color-mist: #e7eefc;
+  --color-muted: #93a0bd;
+  --color-accent: #8b5cf6;
+  --color-accent-soft: #c4b5fd;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  background: #070b14;
+  color: #e7eefc;
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+::selection {
+  background: #7c3aed;
+  color: white;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fade-up {
+  animation: fade-up 0.7s ease both;
+}
+
+.richtext {
+  color: #d7e0f5;
+  line-height: 1.75;
+}
+
+.richtext > * + * {
+  margin-top: 0.9rem;
+}
+
+.richtext h2,
+.richtext h3 {
+  font-family: var(--font-outfit), ui-sans-serif, sans-serif;
+  color: white;
+  line-height: 1.25;
+}
+
+.richtext h2 {
+  margin-top: 1.8rem;
+  font-size: 1.55rem;
+}
+
+.richtext h3 {
+  margin-top: 1.4rem;
+  font-size: 1.2rem;
+}
+
+.richtext a {
+  color: #c4b5fd;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.richtext ul,
+.richtext ol {
+  padding-left: 1.25rem;
+}
+
+.richtext ul {
+  list-style: disc;
+}
+
+.richtext ol {
+  list-style: decimal;
+}
+
+.richtext blockquote {
+  border-left: 2px solid #8b5cf6;
+  padding-left: 1rem;
+  color: #93a0bd;
+}
+
+.editor {
+  min-height: 220px;
+}
+
+.editor:focus {
+  outline: none;
+}

@@ -1,0 +1,148 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime @default(now())
+}
+
+model Category {
+  id             String     @id @default(cuid())
+  name           String
+  slug           String     @unique
+  description    String     @db.Text
+  coverImage     String     @default("")
+  seoTitle       String     @default("")
+  seoDescription String     @default("")
+  active         Boolean    @default(true)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  videos         Video[]
+  photos         Photo[]
+  blogs          Blog[]
+  links          GameLink[]
+
+  @@index([active])
+}
+
+model GameLink {
+  id         String   @id @default(cuid())
+  title      String
+  url        String
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@index([categoryId])
+}
+
+model Video {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  thumbnail   String   @default("")
+  videoUrl    String
+  description String   @db.Text
+  featured    Boolean  @default(false)
+  published   Boolean  @default(false)
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([published, featured])
+  @@index([categoryId])
+  @@index([createdAt])
+}
+
+model Photo {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @default("")
+  imageUrl    String
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([categoryId])
+  @@index([createdAt])
+}
+
+model Blog {
+  id             String   @id @default(cuid())
+  title          String
+  slug           String   @unique
+  excerpt        String   @db.Text
+  content        String   @db.Text
+  featuredImage  String   @default("")
+  seoTitle       String   @default("")
+  seoDescription String   @default("")
+  published      Boolean  @default(false)
+  categoryId     String
+  category       Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([published])
+  @@index([categoryId])
+  @@index([createdAt])
+}
+
+model Faq {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String   @db.Text
+  sortOrder Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([active, sortOrder])
+}
+
+model Enquiry {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String   @default("")
+  subject   String
+  message   String   @db.Text
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([read, createdAt])
+}
+
+model Setting {
+  id             String   @id @default("site")
+  siteName       String
+  tagline        String
+  heroEyebrow    String
+  heroTitle      String
+  heroSubtitle   String   @db.Text
+  heroImage      String   @default("")
+  aboutTitle     String
+  aboutBody      String   @db.Text
+  aboutImage     String   @default("")
+  contactEmail   String
+  contactPhone   String
+  contactAddress String
+  facebook       String   @default("")
+  instagram      String   @default("")
+  youtube        String   @default("")
+  twitter        String   @default("")
+  discord        String   @default("")
+  seoTitle       String
+  seoDescription String   @db.Text
+  seoKeywords    String   @default("")
+  updatedAt      DateTime @updatedAt
+}
