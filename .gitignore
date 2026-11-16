@@ -44,6 +44,7 @@ yarn-error.log*
 !/public/uploads/.gitkeep
 /public/media/*
 !/public/media/.gitkeep
+!/public/media/*.webp
 !/public/media/puzzle/
 !/public/media/puzzle/**
 
@@ -53,3 +54,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.vercel
+.env*
